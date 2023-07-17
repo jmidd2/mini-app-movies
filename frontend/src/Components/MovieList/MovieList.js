@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
 
 import MovieCard from './MovieCard/MovieCard';
+import { AppContext } from '../../App';
 
 function MovieList({ isSearch }) {
-  const [movieList, setMovieList] = useState([]);
+  const { movieList, setMovieList } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = useRef(searchParams.get('q'));
@@ -25,7 +26,7 @@ function MovieList({ isSearch }) {
         console.error(`There was an error: ${response.statusCode}\n${response.body}`);
       }
     };
-
+    //
     const getMovieSearch = async () => {
       const query = encodeURIComponent(searchParams.get('q'));
       searchQuery.current = searchParams.get('q');
