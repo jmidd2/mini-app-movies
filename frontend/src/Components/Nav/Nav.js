@@ -1,18 +1,21 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import NavBar from './NavBar/NavBar';
+import SearchBar from './SearchBar/SearchBar';
 
-function NavBar() {
+function Nav() {
   return (
     <nav
       className="navbar navbar-expand-lg bg-light-subtle"
       data-bs-theme="dark"
     >
       <div className="container-fluid">
-        <a
+        <Link
           className="navbar-brand"
-          href="/"
+          to="/"
         >
           Movie List
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -25,25 +28,11 @@ function NavBar() {
           <span className="navbar-toggler-icon" />
         </button>
 
-        <div className="collapse navbar-collapse">
-          <div className="navbar-nav me-auto">
-            <a
-              className="nav-link active"
-              href="/"
-            >
-              Home
-            </a>
-            <a
-              className="nav-link"
-              href="about"
-            >
-              About
-            </a>
-          </div>
-        </div>
+        <NavBar />
+        <SearchBar />
       </div>
     </nav>
   );
 }
 
-export default NavBar;
+export default Nav;

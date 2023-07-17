@@ -12,7 +12,10 @@ function MovieCard({ movie }) {
 }
 
 MovieCard.propTypes = {
-  movie: PropTypes.exact({ title: PropTypes.string.isRequired }).isRequired,
+  movie: PropTypes.exact({
+    movie_id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default MovieCard;

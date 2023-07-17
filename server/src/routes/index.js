@@ -10,4 +10,18 @@ router.get('/', async (req, res, next) => {
   res.send(movies);
 });
 
+router.get('/search', async (req, res, next) => {
+  const { q } = req.query;
+  const query = decodeURIComponent(q);
+  const response = {};
+
+  if (!query || query === 'undefined') {
+    response.error = 'Query can not be blank';
+    return res.json(response);
+  }
+  const results = await db('movies').select().whereILike('title', `%${query}%`);
+  console.log(results);
+  res.json(results);
+});
+
 export default router;

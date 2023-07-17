@@ -13,7 +13,13 @@ const router = createBrowserRouter(
     >
       <Route
         index
+        key="non-search-1"
         element={<MovieList />}
+      />
+      <Route
+        path="search"
+        key="search-2"
+        element={<MovieList isSearch />}
       />
     </Route>
   )

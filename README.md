@@ -37,8 +37,8 @@ Submitting the project:
 
 ## Level 2
 
-1. [ ] Add a search bar so that a user may see if a movie is in the list.
-2. [ ] After a user submits the search, display all matches (or partial matches) to that title.
+1. [x] Add a search bar so that a user may see if a movie is in the list.
+2. [x] After a user submits the search, display all matches (or partial matches) to that title.
 
 ## Level 3
 
