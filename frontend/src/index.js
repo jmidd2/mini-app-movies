@@ -4,6 +4,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import './index.scss';
 import App from './App';
 import MovieList from './Components/MovieList/MovieList';
+import AddMovie from './Components/AddMovie/AddMovie';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,6 +21,10 @@ const router = createBrowserRouter(
         path="search"
         key="search-2"
         element={<MovieList isSearch />}
+      />
+      <Route
+        path="add-movie"
+        element={<AddMovie />}
       />
     </Route>
   )

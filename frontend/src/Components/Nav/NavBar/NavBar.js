@@ -13,9 +13,9 @@ function NavBar() {
         </Link>
         <Link
           className="nav-link"
-          to="about"
+          to="add-movie"
         >
-          About
+          Add Movie
         </Link>
       </div>
     </div>

@@ -42,7 +42,7 @@ Submitting the project:
 
 ## Level 3
 
-1. [ ] Add an input field for users to add movies.
+1. [x] Add an input field for users to add movies.
 2. [ ] Allow users to delete added movies.
 3. [ ] Display only user added movies, not the hardcoded data.
 

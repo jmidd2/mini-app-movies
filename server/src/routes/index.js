@@ -7,7 +7,13 @@ const router = express.Router();
 // eslint-disable-next-line no-unused-vars
 router.get('/', async (req, res, next) => {
   const movies = await db('movies').select();
-  res.send(movies);
+  res.json(movies);
+});
+
+router.post('/', async (req, res, next) => {
+  const newTitle = decodeURIComponent(req.body.title);
+  const newId = await db('movies').insert({ title: newTitle }, ['movie_id']);
+  res.status(204).json(newId);
 });
 
 router.get('/search', async (req, res, next) => {
