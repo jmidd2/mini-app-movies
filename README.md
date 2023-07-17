@@ -31,8 +31,8 @@ Submitting the project:
 
 ## Level 1
 
-1. [] Establish a RESTful API using express persisting data with PostgreSQL in your server directory.
-2. [] Confirm, routes using Postman
+1. [x] Establish a RESTful API using express persisting data with PostgreSQL in your server directory.
+2. [x] Confirm, routes using Postman
 3. [] Refactor your front end to get the list of movie titles from the server, instead of using a hardcoded list of movie titles
 
 ## Level 2

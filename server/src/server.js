@@ -49,9 +49,14 @@ server.listen(port, () => {
   console.log(`Server listening at http://${host}:${port}`);
 });
 
-process.on('SIGTERM', () => {
+const shutdownServer = () => {
   console.debug('SIGTERM signal received: closing HTTP server...');
   server.close(() => {
     console.debug('HTTP server closed.');
   });
-});
+};
+
+process.on('SIGTERM', shutdownServer);
+
+// TODO: Gracefully shutdown on SIGKILL
+// process.on('SIGKILL', shutdownServer);
