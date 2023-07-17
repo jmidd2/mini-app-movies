@@ -8,6 +8,7 @@ import { AppContext } from '../../App';
 function MovieList({ isSearch }) {
   const { movieList, setMovieList, reloadMovies } = useContext(AppContext);
   const [sortBy, setSortBy] = useState('all');
+  const [showOnlyUserCreated, setShowOnlyUserCreated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = useRef(searchParams.get('q'));
@@ -20,7 +21,11 @@ function MovieList({ isSearch }) {
       if (response.ok) {
         const movies = await response.json();
         if (!ignore) {
-          setMovieList(movies.filter(item => item.user_created === true));
+          if (showOnlyUserCreated) {
+            setMovieList(movies.filter(item => item.user_created === true));
+          } else {
+            setMovieList(movies);
+          }
           setIsLoading(false);
         }
       } else {
@@ -57,12 +62,16 @@ function MovieList({ isSearch }) {
     return () => {
       ignore = true;
     };
-  }, [isSearch, searchParams, reloadMovies, sortBy]);
+  }, [isSearch, searchParams, reloadMovies, sortBy, showOnlyUserCreated]);
   // ssd
   const handleSortChange = (e) => {
     setSortBy(e.target.value);
   };
 
+  const handleUpdate = (e) => {
+    setShowOnlyUserCreated(!showOnlyUserCreated);
+  };
+  // asd
   return (
     <div>
       <h1>The Movie List</h1>
@@ -71,6 +80,16 @@ function MovieList({ isSearch }) {
         <option value="watched">Just Watched</option>
         <option value="not-watched">Not Watched</option>
       </select>
+      <input
+        onChange={handleUpdate}
+        type="checkbox"
+        name="show-user-movies"
+        id="show-user-movies"
+        className="form-check-input"
+        checked={showOnlyUserCreated ?? 'checked'}
+      />
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label htmlFor="show-user-movies" className="form-check-label">Show Only User Added</label>
       {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
       {isSearch && <h2>Search results for: {searchQuery.current}</h2>}
       <div className="row row-cols-1 row-cols-md-4 g-4">

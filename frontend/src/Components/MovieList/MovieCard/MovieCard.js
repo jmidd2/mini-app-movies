@@ -39,6 +39,7 @@ function MovieCard({ movie }) {
     const data = response.json();
     console.log(response);
     console.log(data);
+    setReloadMovies(reloadMovies + 1);
   };
   return (
     <div className="card h-100">

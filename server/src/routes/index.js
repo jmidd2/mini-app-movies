@@ -4,11 +4,11 @@ import db from '../db.js';
 const router = express.Router();
 
 /* GET home page. */
-// eslint-disable-next-line no-unused-vars
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
   const { orderby } = req.query;
   let movies;
   const orderBy = decodeURIComponent(orderby);
+  console.log(orderBy);
   if (orderBy !== '' && orderBy !== 'all') {
     let queryOrder = '';
     switch (orderBy) {
@@ -21,16 +21,22 @@ router.get('/', async (req, res, next) => {
     default:
       break; //
     }
+    console.log(queryOrder);
     movies = await db('movies').select().where(queryOrder).orderBy('title');
   } else {
+    console.log('getting all');
     movies = await db('movies').select().orderBy('title');
+    console.log(movies);
   }
   res.json(movies);
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
   const newTitle = decodeURIComponent(req.body.title);
-  const newId = await db('movies').insert({ title: newTitle, user_created: 1 }, ['movie_id']);
+  const newId = await db('movies').insert(
+    { title: newTitle, user_created: 1 },
+    ['movie_id'],
+  );
   res.status(201).json(newId);
 });
 
@@ -48,7 +54,9 @@ router.delete('/:movieId', async (req, res, next) => {
 router.patch('/:movieId', async (req, res, next) => {
   console.log(req.body);
   try {
-    await db('movies').where('movie_id', req.body.movie.movie_id).update('watched', req.body.movie.watched);
+    await db('movies')
+      .where('movie_id', req.body.movie.movie_id)
+      .update('watched', req.body.movie.watched);
   } catch (e) {
     console.error(e.message);
     next(e);
@@ -56,18 +64,18 @@ router.patch('/:movieId', async (req, res, next) => {
   res.status(201).json({ message: 'good to go' });
 });
 
-router.get('/search', async (req, res, next) => {
+router.get('/search', async (req, res) => {
   const { q } = req.query;
   const query = decodeURIComponent(q);
   const response = {};
 
   if (!query || query === 'undefined') {
     response.error = 'Query can not be blank';
-    return res.json(response);
+    res.json(response);
   }
   const results = await db('movies').select().whereILike('title', `%${query}%`);
   console.log(results);
-  res.json(results);
+  res.status(200).json(results);
 });
 
 export default router;
