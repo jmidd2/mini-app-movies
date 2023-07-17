@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ function MovieList({ isSearch }) {
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = useRef(searchParams.get('q'));
 
   useEffect(() => {
     let ignore = false;
@@ -26,8 +27,8 @@ function MovieList({ isSearch }) {
     };
 
     const getMovieSearch = async () => {
-      console.log(searchParams.get('q'));
       const query = encodeURIComponent(searchParams.get('q'));
+      searchQuery.current = searchParams.get('q');
       const response = await fetch(`http://localhost:3001/search?q=${query}`);
       if (response.ok) {
         const movies = await response.json();
@@ -59,6 +60,8 @@ function MovieList({ isSearch }) {
   return (
     <div>
       <h1>The Movie List</h1>
+      {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
+      {isSearch && <h2>Search results for: {searchQuery.current}</h2>}
       <div className="row row-cols-1 row-cols-md-4 g-4">
         {isLoading && <h2>Loading...</h2>}
         {movieList?.length > 0 &&
