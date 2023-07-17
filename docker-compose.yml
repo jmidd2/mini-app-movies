@@ -1,0 +1,23 @@
+version: '3'
+services:
+  ui:
+    build: ./ui
+    ports:
+      - "3000:3000"
+
+  api:
+    build: ./server
+    ports:
+      - "3001:3001"
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=supersecret
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:

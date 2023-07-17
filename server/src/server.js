@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 import http from 'node:http';
+// eslint-disable-next-line import/extensions
+import 'dotenv/config';
 import app from './app.js';
 
 /**
