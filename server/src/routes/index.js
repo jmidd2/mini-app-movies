@@ -6,7 +6,25 @@ const router = express.Router();
 /* GET home page. */
 // eslint-disable-next-line no-unused-vars
 router.get('/', async (req, res, next) => {
-  const movies = await db('movies').select().orderBy('title');
+  const { orderby } = req.query;
+  let movies;
+  const orderBy = decodeURIComponent(orderby);
+  if (orderBy !== '' && orderBy !== 'all') {
+    let queryOrder = '';
+    switch (orderBy) {
+    case 'watched':
+      queryOrder = { watched: 1 };
+      break;
+    case 'not-watched':
+      queryOrder = { watched: 0 };
+      break;
+    default:
+      break; //
+    }
+    movies = await db('movies').select().where(queryOrder).orderBy('title');
+  } else {
+    movies = await db('movies').select().orderBy('title');
+  }
   res.json(movies);
 });
 
