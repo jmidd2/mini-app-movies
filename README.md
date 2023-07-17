@@ -48,7 +48,7 @@ Submitting the project:
 
 ## Level 4
 
-1. [ ] Add a button to each list item that allows the user to toggle a 'watched' property.
+1. [x] Add a button to each list item that allows the user to toggle a 'watched' property.
 2. [ ] Add two buttons to allow the users to toggle between a list of 'watched' movies and movies 'to watch'.
 
 ## Level 5

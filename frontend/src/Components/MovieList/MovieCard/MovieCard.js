@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import './MovieCard.scss';
@@ -6,6 +6,7 @@ import { AppContext } from '../../../App';
 
 function MovieCard({ movie }) {
   const { setMovieList, setReloadMovies, reloadMovies } = useContext(AppContext);
+  const [watchedStatus, setWatchedStatus] = useState(movie.watched);
   const handleDelete = async ({ movie_id: movieId, title }) => {
     const userConfirm = window.confirm(`Do you want to delete: ${title}?`);
 
@@ -25,17 +26,47 @@ function MovieCard({ movie }) {
     }
   };
 
+  const handleUpdate = async (e, { movie_id: movieId, watched }) => {
+    const newStatus = !watchedStatus;
+    setWatchedStatus(newStatus);
+    const response = await fetch(`http://localhost:3001/${movieId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ movie: { movie_id: movieId, watched: newStatus } }),
+    });
+    const data = response.json();
+    console.log(response);
+    console.log(data);
+  };
   return (
     <div className="card h-100">
       <h5 className="card-header">{movie?.title}</h5>
       <div className="card-body">
-        <div className="card-text">
-          Some details
-        </div>
+        <div className="card-text">Some details</div>
       </div>
-      <div className="card-footer d-flex justify-content-end">
+      <div className="card-footer d-flex justify-content-between align-middle">
+        <div className="form-check align-middle py-2">
+          <input
+            onChange={e => handleUpdate(e, movie)}
+            type="checkbox"
+            key={movie?.movie_id}
+            name={`watched-${movie?.movie_id}`}
+            id={`watched-${movie?.movie_id}`}
+            className="form-check-input"
+            checked={watchedStatus ?? 'checked'}
+          />
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label
+            htmlFor={`watched-${movie?.movie_id}`}
+            className="form-check-label"
+          >
+            Watched
+          </label>
+        </div>
         <button
-          className="btn btn-outline-danger"
+          className="btn btn-outline-danger ms-auto"
           onClick={() => handleDelete(movie)} //
           type="button"
         >

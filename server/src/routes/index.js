@@ -6,7 +6,7 @@ const router = express.Router();
 /* GET home page. */
 // eslint-disable-next-line no-unused-vars
 router.get('/', async (req, res, next) => {
-  const movies = await db('movies').select();
+  const movies = await db('movies').select().orderBy('title');
   res.json(movies);
 });
 
@@ -25,6 +25,17 @@ router.delete('/:movieId', async (req, res, next) => {
     next(e);
   }
   res.status(204).json('Successfully deleted');
+});
+
+router.patch('/:movieId', async (req, res, next) => {
+  console.log(req.body);
+  try {
+    await db('movies').where('movie_id', req.body.movie.movie_id).update('watched', req.body.movie.watched);
+  } catch (e) {
+    console.error(e.message);
+    next(e);
+  }
+  res.status(201).json({ message: 'good to go' });
 });
 
 router.get('/search', async (req, res, next) => {
