@@ -6,7 +6,7 @@ import MovieCard from './MovieCard/MovieCard';
 import { AppContext } from '../../App';
 
 function MovieList({ isSearch }) {
-  const { movieList, setMovieList } = useContext(AppContext);
+  const { movieList, setMovieList, reloadMovies } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = useRef(searchParams.get('q'));
@@ -19,7 +19,7 @@ function MovieList({ isSearch }) {
       if (response.ok) {
         const movies = await response.json();
         if (!ignore) {
-          setMovieList(movies);
+          setMovieList(movies.filter(item => item.user_created === true));
           setIsLoading(false);
         }
       } else {
@@ -56,7 +56,7 @@ function MovieList({ isSearch }) {
     return () => {
       ignore = true;
     };
-  }, [isSearch, searchParams]);
+  }, [isSearch, searchParams, reloadMovies]);
 
   return (
     <div>

@@ -12,12 +12,19 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   const newTitle = decodeURIComponent(req.body.title);
-  const newId = await db('movies').insert({ title: newTitle }, ['movie_id']);
+  const newId = await db('movies').insert({ title: newTitle, user_created: 1 }, ['movie_id']);
   res.status(201).json(newId);
 });
 
 router.delete('/:movieId', async (req, res, next) => {
-  res.status(204);
+  const { movieId } = req.params;
+  try {
+    await db('movies').where('movie_id', movieId).del();
+  } catch (e) {
+    console.error(e.message);
+    next(e);
+  }
+  res.status(204).json('Successfully deleted');
 });
 
 router.get('/search', async (req, res, next) => {

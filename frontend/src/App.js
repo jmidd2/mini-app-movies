@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.scss';
@@ -8,6 +8,7 @@ export const AppContext = createContext({});
 
 function App() {
   const [movieList, setMovieList] = useState([]);
+  const [reloadMovies, setReloadMovies] = useState(0);
 
   return (
     <div className="App">
@@ -16,7 +17,7 @@ function App() {
       </header>
       <div className="container">
         {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-        <AppContext.Provider value={{ movieList, setMovieList }}>
+        <AppContext.Provider value={{ movieList, setMovieList, reloadMovies, setReloadMovies }}>
           <Outlet />
         </AppContext.Provider>
       </div>
