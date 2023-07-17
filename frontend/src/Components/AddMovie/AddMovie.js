@@ -19,7 +19,12 @@ function AddMovie() {
       });
       if (!response.ok) {
         console.error(`There was an error ${response.statusText}`);
+        return;
       }
+
+      movieTitleInput.current.value = '';
+      // eslint-disable-next-line no-alert
+      alert('Movie Added');
     } else {
       // eslint-disable-next-line no-alert
       alert('Enter a title first. O.o');

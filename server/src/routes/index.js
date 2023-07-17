@@ -13,7 +13,11 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   const newTitle = decodeURIComponent(req.body.title);
   const newId = await db('movies').insert({ title: newTitle }, ['movie_id']);
-  res.status(204).json(newId);
+  res.status(201).json(newId);
+});
+
+router.delete('/:movieId', async (req, res, next) => {
+  res.status(204);
 });
 
 router.get('/search', async (req, res, next) => {
