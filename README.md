@@ -18,8 +18,8 @@ Submitting the project:
 ## Level 0
 
 1. [x] Build a frontend using create-react-app in your client directory.
-2. [] Display a list of movies from hardcoded data.
-3. [] You can use the following data:
+2. [x] Display a list of movies from hardcoded data. 
+   - You can use the following data:
 
 `const movies = [
 {title: 'Mean Girls'},
