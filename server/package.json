@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run format && npm run lint:fix",
     "prestart": "npm run build",
-    "start": "nodemon --experimental-vm-modules src/server.js",
+    "start": "npm run migrate:latest && npx knex seed:run && nodemon --experimental-vm-modules src/server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",

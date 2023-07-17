@@ -4,15 +4,11 @@ services:
     build: ./frontend
     ports:
       - "3000:3000"
-    volumes:
-      - /home/jonm/repos/galvanize/mini-app-movies/frontend:/src/app
 
   api:
     build: ./server
     ports:
       - "3001:3001"
-    volumes:
-      - /home/jonm/repos/galvanize/mini-app-movies/server:/src/app
 
   db:
     image: postgres
